@@ -1,8 +1,10 @@
-var sillyid = require('../index')
+var SillyId = require('../index')
 
 function run_test(test) {
   console.log(test.start)
   console.log(test.desc)
+
+  var sillyid = new SillyId()
 
   var id
   if (test.opts) {
@@ -54,5 +56,3 @@ run_test({
   },
   regex: /^([a-z]+-){2}([a-z]+){1}$/
 })
-
-
