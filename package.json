@@ -1,0 +1,28 @@
+{
+  "name": "sillyid",
+  "version": "0.1.0",
+  "description": "Generates Silly Ids like AutonomousExiledRobots or EnragedPinkDolphins",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jamesford/sillyid.git"
+  },
+  "keywords": [
+    "silly",
+    "id",
+    "sillyid",
+    "sillyurl",
+    "adjective",
+    "noun",
+    "adverb"
+  ],
+  "author": "Jamesford",
+  "license": "The Unlicense",
+  "bugs": {
+    "url": "https://github.com/Jamesford/sillyid/issues"
+  },
+  "homepage": "https://github.com/Jamesford/sillyid#readme"
+}
