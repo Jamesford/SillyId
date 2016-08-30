@@ -4,7 +4,7 @@
   "description": "Generates Silly Ids like AutonomousExiledRobots or EnragedPinkDolphins",
   "main": "index.js",
   "scripts": {
-    "test": "node ./tests/index.js"
+    "test": "./node_modules/.bin/mocha ./tests/index.js"
   },
   "repository": {
     "type": "git",
