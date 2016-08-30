@@ -1,58 +1,42 @@
-var SillyId = require('../index')
+var expect = require('chai').expect
+var SillyId = require('../index.js')
 
-function run_test(test) {
-  console.log(test.start)
-  console.log(test.desc)
+describe('Default ID Generation', function() {
 
   var sillyid = new SillyId()
 
-  var id
-  if (test.opts) {
-    id = sillyid.generate(test.opts.order, test.opts.spacer, test.opts.caps)
-  } else {
-    id = sillyid.generate()
-  }
-
-  if (test.regex.test(id)) {
-    console.log('Status: OK (', id, ')')
-  } else {
-    console.log('Status: ERROR')
-    console.log('Unexpected Result:', id)
-  }
-
-  console.log()
-}
-
-run_test({
-  start: 'Default Generation',
-  desc: 'Should generate an ID with default options',
-  regex: /^([A-Z]{1}[a-z]+){3}$/
+  it('should generate an ID like HungryOrangeGeckos', function() {
+    var result = sillyid.generate()
+    expect(result).to.match(/^([A-Z]{1}[a-z]+){3}$/)
+  })
 })
 
-run_test({
-  start: 'Custom Spacer',
-  desc: 'Should generate an ID with a custom spacer',
-  opts: {
-    spacer: '-'
-  },
-  regex: /^([A-Z]{1}[a-z]+-){2}([A-Z]{1}[a-z]+){1}$/
+describe('Custom Spacer', function() {
+
+  var sillyid = new SillyId(undefined, '-', undefined)
+
+  it('should generate an ID like Hungry-Orange-Geckos', function() {
+    var result = sillyid.generate()
+    expect(result).to.match(/^([A-Z]{1}[a-z]+-){2}([A-Z]{1}[a-z]+){1}$/)
+  })
 })
 
-run_test({
-  start: 'No Capitalisation',
-  desc: 'Should generate an ID without capitalising the words',
-  opts: {
-    caps: false
-  },
-  regex: /^([a-z]+){3}$/
+describe('No Capitalisation', function() {
+
+  var sillyid = new SillyId(undefined, undefined, false)
+
+  it('should generate an ID like hungryorangegeckos', function() {
+    var result = sillyid.generate()
+    expect(result).to.match(/^([a-z]+){3}$/)
+  })
 })
 
-run_test({
-  start: 'Custom Spacer, No Caps',
-  desc: 'Should generate an ID with a custom spacer and without capitalising the words',
-  opts: {
-    spacer: '-',
-    caps: false
-  },
-  regex: /^([a-z]+-){2}([a-z]+){1}$/
+describe('Custom Spacer & No Capitalisation', function() {
+
+  var sillyid = new SillyId(undefined, '-', false)
+
+  it('should generate an ID like hungry-orange-geckos', function() {
+    var result = sillyid.generate()
+    expect(result).to.match(/^([a-z]+-){2}([a-z]+){1}$/)
+  })
 })

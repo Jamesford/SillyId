@@ -14,7 +14,7 @@ var defaults = {
 var SillyId = function (order, spacer, caps) {
   this.order = order || defaults.order
   this.spacer = spacer || defaults.spacer
-  this.caps = caps || defaults.caps
+  this.caps = caps === false ? false : defaults.caps
 }
 
 SillyId.prototype.capitalize = function (string) {
