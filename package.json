@@ -1,6 +1,6 @@
 {
   "name": "sillyid",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generates Silly Ids like AutonomousExiledRobots or EnragedPinkDolphins",
   "main": "index.js",
   "scripts": {
