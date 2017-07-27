@@ -1,7 +1,7 @@
-var adjectives = require('./dictionaries/adjectives_by_letter.json')
-var nouns = require('./dictionaries/nouns_by_letter.json')
+const adjectives = require('./dictionaries/adjectives_by_letter.json')
+const nouns = require('./dictionaries/nouns_by_letter.json')
 
-var defaults = {
+const defaults = {
   order: [
     { type: 'adj', letter: '*' },
     { type: 'adj', letter: '*' },
@@ -11,39 +11,40 @@ var defaults = {
   caps: true
 }
 
-var SillyId = function (order, spacer, caps) {
-  this.order = order || defaults.order
-  this.spacer = spacer || defaults.spacer
-  this.caps = caps === false ? false : defaults.caps
+function cap (str) {
+  return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 }
 
-SillyId.prototype.capitalize = function (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+function randomize (obj, char) {
+  if (char === '*') char = Object.keys(obj)[Math.floor(Math.random() * Object.keys(obj).length)]
+  return obj[char][Math.floor(Math.random() * obj[char].length)]
 }
 
-SillyId.prototype.randomize = function (object, letter) {
-  var l = letter
-  if (l === '*') l = Object.keys(object)[Math.floor(Math.random() * Object.keys(object).length)]
-  var word = object[l][Math.floor(Math.random() * object[l].length)]
-  if (this.caps) {
-    return this.capitalize(word)
-  } else {
-    return word
+class SillyId {
+  constructor (order, spacer, caps) {
+    this.order = order || defaults.order
+    this.spacer = spacer || defaults.spacer
+    this.caps = caps === false ? false : defaults.caps
   }
-}
 
-SillyId.prototype.generate = function () {
-  var self = this
-  return this.order.map(function (entry) {
-    switch (entry.type) {
-      case 'adj':
-        return self.randomize(adjectives, entry.letter)
-      case 'noun':
-        return self.randomize(nouns, entry.letter)
-      default:
-        return self.randomize(adjectives, entry.letter)
-    }
-  }).join(this.spacer)
+  generate () {
+    return this.order.map(entry => {
+      switch (entry.type) {
+        case 'adj':
+          return this.caps
+            ? cap(randomize(adjectives, entry.letter))
+            : randomize(adjectives, entry.letter)
+        case 'noun':
+          return this.caps
+            ? cap(randomize(nouns, entry.letter))
+            : randomize(nouns, entry.letter)
+        default:
+          return this.caps
+            ? cap(randomize(adjectives, entry.letter))
+            : randomize(adjectives, entry.letter)
+      }
+    }).join(this.spacer)
+  }
 }
 
 module.exports = SillyId
