@@ -11,13 +11,24 @@ const defaults = {
   caps: true
 }
 
-function cap (str) {
-  return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+function wordListByType (type) {
+  switch (type) {
+    case 'adj':
+      return adjectives
+    case 'noun':
+      return nouns
+    default:
+      return adjectives
+  }
 }
 
 function randomize (obj, char) {
   if (char === '*') char = Object.keys(obj)[Math.floor(Math.random() * Object.keys(obj).length)]
   return obj[char][Math.floor(Math.random() * obj[char].length)]
+}
+
+function capitalize (str) {
+  return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 }
 
 class SillyId {
@@ -29,20 +40,12 @@ class SillyId {
 
   generate () {
     return this.order.map(entry => {
-      switch (entry.type) {
-        case 'adj':
-          return this.caps
-            ? cap(randomize(adjectives, entry.letter))
-            : randomize(adjectives, entry.letter)
-        case 'noun':
-          return this.caps
-            ? cap(randomize(nouns, entry.letter))
-            : randomize(nouns, entry.letter)
-        default:
-          return this.caps
-            ? cap(randomize(adjectives, entry.letter))
-            : randomize(adjectives, entry.letter)
-      }
+      const wordList = wordListByType(entry.type)
+      const word = randomize(wordList, entry.letter)
+
+      return this.caps
+        ? capitalize(word)
+        : word
     }).join(this.spacer)
   }
 }
